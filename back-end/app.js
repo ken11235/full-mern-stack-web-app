@@ -12,6 +12,9 @@ app.use(cors()) // allow cross-origin resource sharing
 app.use(express.json()) // decode JSON-formatted incoming POST data
 app.use(express.urlencoded({ extended: true })) // decode url-encoded incoming POST data
 
+// serve static files (e.g. images) from the public directory
+app.use('/static', express.static(`${__dirname}/public`))
+
 // connect to database
 mongoose
   .connect(`${process.env.DB_CONNECTION_STRING}`)
@@ -76,6 +79,21 @@ app.post('/messages/save', async (req, res) => {
       status: 'failed to save the message to the database',
     })
   }
+})
+
+// a route to handle fetching the content of the About Us page
+app.get('/about', (req, res) => {
+  res.json({
+    name: 'Kumneger Matewos',
+    imageUrl: `${req.protocol}://${req.get('host')}/static/images/kumneger.jpg`,
+    paragraphs: [
+      "Hi, I'm Kumneger Matewos, a junior at NYU Abu Dhabi majoring in Computer Science with a minor in Mathematics.",
+      "I love building things, and just as much, breaking them to see how they work. I'm not sure the two are connected, but my other big love is music. I'm currently learning to play the guitar.",
+      "As for my goals: I hope to become filthy rich without becoming famous. I also want to do more than just play a few instruments, like the guitar, the piano and the drums. I want to be able to truly speak through them.",
+      'Fun fact: when I was five years old, I wandered out of the house on my own. A woman found me on the street and took me in, and I stayed with her for about three days while my whole family searched for me. My mom reported me missing to the police on the very first day, and the woman who found me had also gone to the police. The catch? They had gone to two different police stations! It took until the third day for the stations to connect the two reports, and I was finally reunited with my family.',
+    ],
+    status: 'all good',
+  })
 })
 
 // export the express app we created to make it available to other modules
