@@ -15,6 +15,42 @@ To complete this exercise:
 1. run this app locally on your own machine (instructions for launching the app below)
 1. add a new page to the app called "About Us", where you have written a few paragraphs about yourself and included a photo of yourself. The page content, including all text and the URL to the image must be retrieved as `JSON` data from a new route you create on the back-end.
 
+## My Changes: the "About Us" Page
+
+*By Kumneger Matewos ([@ken11235](https://github.com/ken11235))*
+
+I added an **About Us** page that introduces me with a few paragraphs and a photo. As the exercise requires, none of the page content is hard-coded in React: all of the text and the image URL are served as `JSON` by a new back-end route.
+
+### Back end
+
+- **New route: `GET /about`** in [`back-end/app.js`](./back-end/app.js). It returns the page content as JSON:
+
+  ```json
+  {
+    "name": "Kumneger Matewos",
+    "imageUrl": "http://localhost:5002/static/images/kumneger.jpg",
+    "paragraphs": ["...", "..."],
+    "status": "all good"
+  }
+  ```
+
+- **Static file serving:** files in [`back-end/public/`](./back-end/public/) are served under `/static`, so the photo is available at `http://localhost:5002/static/images/kumneger.jpg`.
+
+### Front end
+
+- **New component:** [`front-end/src/AboutUs.jsx`](./front-end/src/AboutUs.jsx) (styled by [`AboutUs.css`](./front-end/src/AboutUs.css)). It fetches `/about` with `axios` when it loads, shows a loading icon while waiting, then displays my name, photo, and paragraphs. Errors are shown on the page if the request fails.
+- **New route:** `/about` in [`front-end/src/App.jsx`](./front-end/src/App.jsx).
+- **Navigation:** an "About Us" link in the header ([`front-end/src/Header.jsx`](./front-end/src/Header.jsx)).
+
+### Try it
+
+After launching the app with the instructions below, visit:
+
+- the page: http://localhost:7002/about
+- the raw JSON: http://localhost:5002/about
+
+> **Note:** the front end uses Vite 7, which requires **Node.js 20.19 or newer**. Check your version with `node -v`.
+
 ## How to launch the app
 
 ### Get the code
